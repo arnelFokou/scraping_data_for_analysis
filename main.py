@@ -1,6 +1,9 @@
 from bs4 import BeautifulSoup
 import requests
 import credentials
+import pandas as pd
+import re
+
 
 def extract(url,nb_pages):    
     all_offers = []
@@ -16,9 +19,15 @@ def extract(url,nb_pages):
             offer['date_published'] = job_offer.find('div',class_="flex items-center gap-2 justify-between mb-4 -mt-2").time.text
             offer['details'] = job_offer.find('div',class_='flex flex-wrap items-center gap-4 mb-4 w-full').text.strip().split('\n')
             offer['description'] = job_offer.find('div',class_='fw-text-highlight line-clamp-3 mb-4').text
-            offer['link'] = job_offer.find('div',class_='px-4 pb-4 flex flex-col h-full').h3.a.get('href')
-            offer['competences'] = job_offer.find('div',class_="flex items-center").text if job_offer.find('div',class_="flex items-center") else ""
+            offer['link'] = current_url.split("/fr/")[0]+job_offer.find('div',class_='px-4 pb-4 flex flex-col h-full').h3.a.get('href')
+            offer['competences'] = job_offer.find('div',class_="flex items-center").text.split("  ") if job_offer.find('div',class_="flex items-center") else ""
             all_offers.append(offer)
     return all_offers 
 
-print(extract(credentials.url,nb_pages=7))
+
+def transform(data):
+    df = pd.DataFrame(data)
+    print(df.head(2))
+
+data = extract(credentials.url,nb_pages=7)
+transform(data)
