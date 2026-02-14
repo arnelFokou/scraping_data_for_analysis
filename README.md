@@ -41,7 +41,7 @@ This project is designed to scrape data, clean it, and provide an interactive an
 ## Streamlit Interface
 
 
-![Streamlit Interface Screenshot 1](./images/pic1.png.png)
+![Streamlit Interface Screenshot 1](./images/pic1.png)
 
 ![Streamlit Interface Screenshot 2](./images/pic2.png)
 
